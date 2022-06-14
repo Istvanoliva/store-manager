@@ -21,6 +21,10 @@ const getSale = async (id) => {
     return salesList;
 };
 
+// const postSale = async () => {};
+
+// const updateSale = async () => {};
+
 module.exports = {
     getAll,
     getSale,
