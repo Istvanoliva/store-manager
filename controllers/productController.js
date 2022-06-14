@@ -12,7 +12,14 @@ const getProduct = async (req, res) => {
     return res.status(404).json({ message: 'Product not found' });
 };
 
+const postProduct = async (req, res) => {
+    const { name, quantity } = req.body;
+    const result = await productService.postProduct(name, quantity);
+    return res.status(201).json(result);
+};
+
 module.exports = {
     getAll,
     getProduct,
+    postProduct,
 };
