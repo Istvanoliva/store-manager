@@ -21,18 +21,26 @@ const getSale = async (id) => {
     return salesList;
 };
 
-// const postSale = async (array) => {
-//     const post = await salesModel.postSale(array);
+const postSale = async (newSales) => {
+    const saleId = await salesModel.createSaleID();
+    const id = saleId.insertId;
 
-//     return {
-//         id: '',
-//         itemsSold: array,
-//     };
-// };
+    await Promise.all(
+    newSales.map(async (sale) => {
+        await salesModel.postSale(id, sale.productId, sale.quantity);
+    }),
+    );
+    
+    return {
+        id,
+        itemsSold: newSales,
+    };
+};
 
 // const updateSale = async () => {};
 
 module.exports = {
     getAll,
     getSale,
+    postSale,
 };

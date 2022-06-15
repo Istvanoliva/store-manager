@@ -37,7 +37,7 @@ app.get('/sales', salesController.getAll);
 
 app.get('/sales/:id', salesController.getSaleById);
 
-app.post('/sales', checkProductId, SaleQuantityValidator);
+app.post('/sales', checkProductId, SaleQuantityValidator, salesController.postSale);
  
 app.put('/sales/:id', checkProductId, SaleQuantityValidator);
 
