@@ -12,11 +12,17 @@ const getSaleById = async (req, res) => {
     return res.status(200).json(sale);
 };
 
-const postSale = async (req, res) => {
-    console.log('Você está tentando postar uma venda');
-    console.log(req.body);
-    res.status(200).json({ message: 'Você não vai postar uma venda' });
-};
+// const postSale = async (req, res) => {
+//     const { body } = req;
+
+//     const post = await salesService.postSale(body);
+
+//     console.log(post);
+//     console.log('Você está tentando postar uma venda');
+//     console.log(req.body);
+
+//     res.status(201).json(post);
+// };
 
 const updateSale = async (_req, res) => {
     res.status(200).json({ message: 'atualizar venda' });
@@ -25,6 +31,5 @@ const updateSale = async (_req, res) => {
 module.exports = {
     getAll,
     getSaleById,
-    postSale,
     updateSale,
 };

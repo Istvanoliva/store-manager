@@ -21,7 +21,14 @@ const getSale = async (id) => {
     return salesList;
 };
 
-// const postSale = async () => {};
+// const postSale = async (array) => {
+//     const post = await salesModel.postSale(array);
+
+//     return {
+//         id: '',
+//         itemsSold: array,
+//     };
+// };
 
 // const updateSale = async () => {};
 

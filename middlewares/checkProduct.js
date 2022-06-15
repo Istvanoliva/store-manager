@@ -1,11 +1,11 @@
-const { getAll } = require('../services/productService');
+const { getProduct } = require('../services/productService');
 
 const checkProduct = async (req, res, next) => {
-    const { name } = req.body;
-    const products = await getAll();
-    const alredyExist = products.some((product) => product.name === name);
+    const { id } = req.params;
+    const products = await getProduct(id);
 
-    if (!alredyExist) return res.status(404).json({ message: 'Product not found' });
+    if (!products) return res.status(404).json({ message: 'Product not found' });
+
     next();
 };
 

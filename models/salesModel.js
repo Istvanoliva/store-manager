@@ -19,7 +19,12 @@ const getSale = async (id) => {
     return sale;
 };
 
-// const postSale = async () => {};
+// const postSale = async (id, quantity) => {
+//     const query = `
+//     INSERT INTO StoreManager.sales () VALUES (?)`;
+//     const [post] = await connection.execute(query, [id, quantity]);
+//     return post;
+// };
 
 // const updateSale = async () => {};
 

@@ -34,10 +34,10 @@ app.delete('/products/:id', productsController.deleteProduct);
 
 // SALES
 app.get('/sales', salesController.getAll);
+
 app.get('/sales/:id', salesController.getSaleById);
 
-app.post('/sales', checkProductId, SaleQuantityValidator,
-salesController.postSale);
+app.post('/sales', checkProductId, SaleQuantityValidator);
  
 app.put('/sales/:id', checkProductId, SaleQuantityValidator);
 
