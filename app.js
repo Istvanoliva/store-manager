@@ -21,6 +21,7 @@ app.get('/', (_request, response) => {
 
 // PRODUCTS
 app.get('/products', productsController.getAll);
+
 app.get('/products/:id', productsController.getProduct);
 
 app.post('/products', nameValidator,
@@ -28,6 +29,8 @@ quantityValidator, newProductValidator, productsController.postProduct);
 
 app.put('/products/:id',
 nameValidator, quantityValidator, checkProduct, productsController.updateProduct);
+
+app.delete('/products/:id', productsController.deleteProduct);
 
 // SALES
 app.get('/sales', salesController.getAll);
