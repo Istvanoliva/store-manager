@@ -39,6 +39,6 @@ app.get('/sales/:id', salesController.getSaleById);
 
 app.post('/sales', checkProductId, SaleQuantityValidator, salesController.postSale);
  
-app.put('/sales/:id', checkProductId, SaleQuantityValidator);
+app.put('/sales/:id', checkProductId, SaleQuantityValidator, salesController.updateSale);
 
 module.exports = app;

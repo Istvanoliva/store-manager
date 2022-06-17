@@ -18,8 +18,11 @@ const postSale = async (req, res) => {
     res.status(201).json(post);
 };
 
-const updateSale = async (_req, res) => {
-    res.status(200).json({ message: 'atualizar venda' });
+const updateSale = async (req, res) => {
+    const { id } = req.params;
+    const { body } = req;
+    const update = await salesService.updateSale(body, id);
+    res.status(200).json(update);
 };
 
 module.exports = {
