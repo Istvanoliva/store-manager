@@ -41,4 +41,6 @@ app.post('/sales', checkProductId, SaleQuantityValidator, salesController.postSa
  
 app.put('/sales/:id', checkProductId, SaleQuantityValidator, salesController.updateSale);
 
+app.delete('/sales/:id', salesController.deleteSale);
+
 module.exports = app;
