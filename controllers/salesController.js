@@ -1,3 +1,4 @@
+const { getProduct } = require('../services/productService');
 const salesService = require('../services/salesService');
 
 const getAll = async (_req, res) => {
@@ -14,6 +15,13 @@ const getSaleById = async (req, res) => {
 
 const postSale = async (req, res) => {
     const { body } = req;
+    const [{ productId, quantity }] = body;
+    const checkInventory = await getProduct(productId);
+
+    if (quantity > checkInventory.quantity) {
+        return res.status(422).json({ message: 'Such amount is not permitted to sell' });
+    }
+
     const post = await salesService.postSale(body);
     res.status(201).json(post);
 };
