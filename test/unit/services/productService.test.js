@@ -49,7 +49,7 @@ describe('Testa a função getAll na camada Service', () => {
             expect(result).to.be.an('array');
         });
       
-        it('O array não está vazio', async () => {
+        it('O array está vazio', async () => {
           const result = await getAll();
           expect(result).to.be.empty;
         });
