@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const productService = require('../../../services/productService');
-const { getAll, getProduct, deleteProduct } = require('../../../services/productService');
+const { getAll, getProduct, postProduct } = require('../../../services/productService');
 const productModel = require('../../../models/productModel');
 
 describe('Testa a função getAll na camada Service', () => {
@@ -88,4 +88,32 @@ describe('Testa a função getProduct na camada Service', () => {
     });
 });
 
-//
+describe('Testa a função postProduct', () => {
+    describe('Quando cria um produto novo', () => {
+  
+      const result = {
+        "id": 23,
+        "name": "Cadeira",
+        "quantity": 30
+      }
+  
+      beforeEach(() => {
+        sinon.stub(productModel, 'postProduct')
+          .resolves(result)
+      })
+  
+      afterEach(() => {
+        productModel.postProduct.restore()
+      })
+  
+      it('Deve retornar um objeto', async () => {
+        const response = await postProduct()
+        expect(response).to.be.a('object')
+      })
+  
+      it('O objeto deve conter as propriedades "id", "name" e "quantity"', async () => {
+        const response = await postProduct()
+        expect(response).to.have.all.keys('id', 'name', 'quantity')
+      })
+    })
+});

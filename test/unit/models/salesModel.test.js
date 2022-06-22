@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const connection = require('../../../models/connection')
-const { getAll, getSale } = require('../../../models/salesModel')
+const { getAll, getSale, postSale, updateSale } = require('../../../models/salesModel')
 
 describe('Busca todos os vendas do BD', () => {
     describe('Quando não há vendas registradas', () => {
@@ -121,3 +121,39 @@ describe('Busca uma venda no BD', () => {
     });
     });
 });
+
+describe('Cria uma nova venda', () => {
+  describe('Quando a venda é criada com sucesso', () => {
+    const result = [{
+      fieldCount: 0,
+      affectedRows: 1,
+      insertId: 3,
+      info: '',
+      serverStatus: 2,
+      warningStatus: 0
+    }]
+
+    const sales = [
+      {
+        "productId": 1,
+        "quantity": 5
+      },
+      {
+        "productId": 2,
+        "quantity": 5
+      }
+    ];
+
+    beforeEach(() => {
+      sinon.stub(connection, 'execute')
+        .resolves(result)
+    });
+
+    afterEach(() =>  connection.execute.restore())
+
+    it('Deve retornar um objeto', async () => {
+      const result = await postSale(sales)
+      expect(result).to.be.a('object')
+    });
+  })
+})
