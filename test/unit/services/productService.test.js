@@ -88,24 +88,3 @@ describe('Testa a função getProduct na camada Service', () => {
     });
 });
 
-describe('Testa a função deleteProduct', () => {
-    describe('Quando um produto não é deletado', () => {
-        const result = null;
-        const invalidId = 29;
-
-        beforeEach(async () => {
-            sinon.stub(productService, 'getProduct')
-              .resolves(result);
-        });
-
-        afterEach(async () => {
-            productService.getProduct.restore();
-        });
-
-        it('Retorna null', async () => {
-            const deleted = await deleteProduct(invalidId);
-            expect(deleted).to.be('null');
-        })
-    })
-})
-//
