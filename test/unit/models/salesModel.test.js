@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const connection = require('../../../models/connection')
-const { getAll } = require('../../../models/salesModel')
+const { getAll, getSale } = require('../../../models/salesModel')
 
 describe('Busca todos os vendas do BD', () => {
     describe('Quando não há vendas registradas', () => {
@@ -73,5 +73,51 @@ describe('Busca todos os vendas do BD', () => {
             const result = await getAll();
             expect(result).to.be.an('object');
         })
+    });
+});
+
+describe('Busca uma venda no BD', () => {
+    describe('quando não há venda com determinado id', () => {
+      const result = [
+        {
+          id: 1,
+          date: '2022-06-22T06:16:27.000Z',
+          sale_id: 1,
+          product_id: 1,
+          quantity: 5
+        },
+        {
+          id: 1,
+          date: '2022-06-22T06:16:27.000Z',
+          sale_id: 1,
+          product_id: 2,
+          quantity: 10
+        }
+      ];
+      const id = 1;
+  
+      beforeEach(async () => {
+        sinon.stub(connection, 'execute')
+          .resolves(result);
+      });
+  
+      afterEach(async () => {
+        connection.execute.restore();
+      });
+  
+      it('Retorna um objeto', async () => {
+        const result = await getSale(id);
+        expect(result).to.be.an('object');
+      });
+
+      it('O objeto não deve estar vazio', async () => {
+        const result = await getSale(id);
+        expect(result).to.not.be.empty;
+      });
+
+      it('O objeto retornado deve ter as propriedades "id", "date", "sale_id", "product_id" e "quantity"', async () => {
+        const result = await getSale(id);
+        expect(result).to.include.all.keys('id', 'date', 'sale_id', 'product_id', 'quantity');
+    });
     });
 });

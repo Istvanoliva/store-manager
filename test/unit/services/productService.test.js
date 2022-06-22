@@ -1,7 +1,8 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const { getAll } = require('../../../services/productService');
+const productService = require('../../../services/productService');
+const { getAll, getProduct, deleteProduct } = require('../../../services/productService');
 const productModel = require('../../../models/productModel');
 
 describe('Testa a função getAll na camada Service', () => {
@@ -55,3 +56,55 @@ describe('Testa a função getAll na camada Service', () => {
         });
     });
 });
+
+describe('Testa a função getProduct na camada Service', () => {
+    describe('Quando há um produto cadastrado', () => {
+        const result = [{ id: 1, name: 'Martelo de Thor', quantity: 10 }];
+        const id = 1;
+
+        beforeEach(async () => {
+            sinon.stub(productModel, 'getProduct')
+              .resolves([result]);
+        });
+
+        afterEach(async () => {
+            productModel.getProduct.restore();
+        });
+
+        it('retorna um objeto', async () => {
+            const [product] = await getProduct(id);
+            expect(product).to.be.an('object');
+        });
+
+        it('O objeto não está vazio', async () => {
+            const [product] = await getProduct(id);
+            expect(product).to.not.be.empty;
+        });  
+      
+        it('o objeto possui as propriedades "id", "name" e "quantity"', async () => {
+          const [product] = await getProduct(id);
+          expect(product).to.include.all.keys('id', 'name', 'quantity');
+        });
+    });
+});
+
+describe('Testa a função deleteProduct', () => {
+    describe('Quando um produto não é deletado', () => {
+        const result = null;
+        const invalidId = 29;
+
+        beforeEach(async () => {
+            sinon.stub(productService, 'getProduct')
+              .resolves(result);
+        });
+
+        afterEach(async () => {
+            productService.getProduct.restore();
+        });
+
+        it('Retorna null', async () => {
+            const deleted = await deleteProduct(invalidId);
+            expect(deleted).to.be('null');
+        })
+    })
+})

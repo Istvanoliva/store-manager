@@ -113,3 +113,31 @@ describe('Chamada do controller getAll', () => {
       });
     });
   });
+
+  describe('Chama do controller updateProduct', () => {
+    describe('Quando um produto é atualizado com sucesso', () => {
+      const response = {}
+      const request = {}
+      const result = { id: 1, name: 'produto', quantity: 15 };
+
+      beforeEach(() => {
+        request.params = { id: 1 }
+        request.body = { name: 'produto', quantity: 15 }
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub().returns();
+  
+        sinon.stub(productService, 'updateProduct').resolves(result);
+      })
+  
+      afterEach(() => {
+        productService.updateProduct.restore();
+      })
+
+      it('Retorna o "status" passando o código 200', async () => {
+        await productController.updateProduct(request, response)
+  
+        expect(response.status.calledWith(200)).to.be.equal(true);
+      })
+      
+    });
+  });

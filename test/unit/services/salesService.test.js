@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const { getAll } = require('../../../services/salesService');
+const { getAll, getSale } = require('../../../services/salesService');
 const salesModel = require('../../../models/salesModel');
 
 describe('Testa a função getAll na camada Service', () => {
@@ -67,9 +67,44 @@ describe('Testa a função getAll na camada Service', () => {
             expect(result).to.be.an('array');
         });
       
-        it('O array  não está vazio', async () => {
+        it('O array está vazio', async () => {
           const result = await getAll();
           expect(result).to.be.empty;
         });
     });
+});
+
+describe('Testa a função getSale na camada Service', () => {
+  describe('Quando retorna uma venda com sucesso', () => {
+    const result = [
+      {
+        id: 1,
+        date: '2022-06-21T07:44:54.000Z',
+        sale_id: 1,
+        product_id: 1,
+        quantity: 5
+      },
+    ];
+
+      beforeEach(async () => {
+        sinon.stub(salesModel, 'getSale')
+          .resolves(result);
+      });
+
+      afterEach(async () => {
+      salesModel.getSale.restore();
+    });
+
+    it('Retorna um array', async () => {
+      const result = await getSale();
+      expect(result).to.be.an('array');
+    });
+
+    it('O array não está vazio', async () => {
+    const result = await getSale();
+    expect(result).to.not.be.empty;
+    });
+
+    
+  })
 });
